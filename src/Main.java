@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        calcBoats();
-    }
+        inputAndCalc();
+           }
 
     private static void printArray(String message, int[] massiv) {
         System.out.println(message + " " + massiv.length + " чисел");
@@ -13,7 +13,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void bubbleSort(int[] array) {
+    public static void bubbleSort(int array[]) {
         boolean change = false;
         for (int i = 0; i < array.length - 1; i++) {
             //пройти по массиву от начала, проверяя попарно каждый элемент со следующим
@@ -31,27 +31,34 @@ public class Main {
         }
     }
 
-    public static void calcBoats() {
+
+    public static void calcBoats(int n, int boatsCapacity, int[] array) {
+        int counter = 0;
+        int i = 0;
+        int j = n - 1;
+        while (i <= j) {
+            if (array[i] + array[j] <= boatsCapacity) {
+                i = i++;
+                j--;
+            }
+            i++;
+            counter++;
+        }
+        System.out.println("Кол-во необходимых байдарок = " + counter);
+    }
+
+    public static void inputAndCalc() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите количество людей и грузоподъемность байдарки:");
         int n = scanner.nextInt();
         int boatsCapacity = scanner.nextInt();
-        int[] weightByEach = new int[n];
         System.out.println("Вводите вес каждого из " + n + " людей");
+        int[] array = new int[n];
         for (int i = 0; i < n; i++) {
-            weightByEach[i] = scanner.nextInt();
+            array[i] = scanner.nextInt();
         }
-        int counter = 0;
-        int k = 0;
-        int j = n - 1;
-        while (k <= j) {
-            if (weightByEach[k] + weightByEach[j] <= boatsCapacity) {
-                k = k++;
-                j--;
-            }
-            k++;
-            counter++;
-        }
-        System.out.println("Количество необходимых байдарок = "+counter);
+        bubbleSort(array);
+        calcBoats(n, boatsCapacity, array);
     }
+
 }
